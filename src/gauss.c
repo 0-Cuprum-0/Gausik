@@ -1,4 +1,5 @@
 #include "gauss.h"
+#include "pivot.h"
 
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem
