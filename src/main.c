@@ -16,7 +16,12 @@ int main(int argc, char ** argv) {
 	printToScreen(A);
 	printToScreen(b);
 
-	res = eliminate(A,b);
+	res = eliminate(A, b);
+
+	if (res) {
+    fprintf(stderr, "Błąd eliminacji\n");
+    return 1;
+	}
 	x = createMatrix(b->r, 1);
 	if (x != NULL) {
 		res = backsubst(x,A,b);
