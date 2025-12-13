@@ -1,6 +1,7 @@
 #include "gauss.h"
 #include "pivot.h"
-
+#include <math.h>
+#define ZERO_TOLERANCE 1e-12
 /**
  * Zwraca 0 - elimnacja zakonczona sukcesem
  * Zwraca 1 - macierz osobliwa - dzielenie przez 0
@@ -25,6 +26,12 @@ int eliminate(Matrix *mat, Matrix *b){
 		}
 		
 	}
+
+	for (int k = 0; k < cols && k < rows; k++){
+		if (fabs(mat->data[k][k]) < ZERO_TOLERANCE)
+			return 1;
+	}
+	
 	return 0;
 }
 
