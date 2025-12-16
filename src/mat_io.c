@@ -2,20 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_AMOUNT 100
+
 
 /**
  * Zwraca <> NULL - udalo sie wczytac
  * Zwraca == NULL - podczas wczytywania wystapil blad
  */
 
- typedef struct{
-	double data [MAX_AMOUNT][MAX_AMOUNT];
-	int c;
-	int r;
-
-
- }Matrix;
+ 
 Matrix * readFromFile(char * fname) {
 				int r,c;
 				int ir, ic;
