@@ -1,35 +1,28 @@
 #include "backsubst.h"
-#include <stdio.h>
-/**
- * Zwraca 0 - wsteczne podstawienie zakonczone sukcesem
- * Zwraca 1 - błąd dzielenia przez 0 (element na diagonali = 0)
- * Zwraca 2 - błąd nieprawidłowych rozmiarów macierzy
- */
-int  backsubst(Matrix *x, Matrix *mat, Matrix *b) {
-	
+#include <math.h>
 
-	int n = mat->r;
-	
-		for(int i = mat->c-1; i >=0; i--){
-			x->data[i][0]= b->data[0][i];
-			for (int j = i+1; j<n; j++){
-				x->data[i][0] -= mat->data[i][j] * x->data[j][0];
-			}
-		}
-		for (int a = 0; a <=x->r;a++){
+#define ZERO_TOLERANCE 1e-12
 
-			
-			printf("%f",x->data[a][0]);
-		}
+int backsubst(Matrix *x, Matrix *mat, Matrix *b) {
 
-				/* To ponizej jest przepisaniem b do x. Nalezy to poprawic! */
+    if (mat->r != mat->c || b->r != mat->r || b->c != 1 || x->r != mat->r || x->c != 1)
+        return 2;
 
-				// int i;
-				// for (i =0; i < x->r; i++) {
-				// 				x->data[i][0] = b->data[i][0];
-				// }
+    int n = mat->r;
 
-			return 0;
+    for (int i = n - 1; i >= 0; i--) {
+
+        if (fabs(mat->data[i][i]) < ZERO_TOLERANCE)
+            return 1;
+
+        double sum = b->data[i][0];
+
+        for (int j = i + 1; j < n; j++) {
+            sum -= mat->data[i][j] * x->data[j][0];
+        }
+
+        x->data[i][0] = sum / mat->data[i][i];
+    }
+
+    return 0;
 }
-
-
